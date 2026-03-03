@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="NGANHHOC">
+    <Key>
+      <PropertyRef Name="MaNganh" />
+    </Key>
+    <Property Name="MaNganh" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="TenNganh" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="THISINH">
+    <Key>
+      <PropertyRef Name="MaTS" />
+    </Key>
+    <Property Name="MaTS" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="HoTen" Type="nvarchar" MaxLength="50" />
+    <Property Name="NgaySinh" Type="date" />
+    <Property Name="DiemThi" Type="float" />
+    <Property Name="MaNganh" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_THISINH_NGANHHOC">
+    <End Role="NGANHHOC" Type="Self.NGANHHOC" Multiplicity="0..1" />
+    <End Role="THISINH" Type="Self.THISINH" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NGANHHOC">
+        <PropertyRef Name="MaNganh" />
+      </Principal>
+      <Dependent Role="THISINH">
+        <PropertyRef Name="MaNganh" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ModelStoreContainer">
+    <EntitySet Name="NGANHHOC" EntityType="Self.NGANHHOC" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="THISINH" EntityType="Self.THISINH" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_THISINH_NGANHHOC" Association="Self.FK_THISINH_NGANHHOC">
+      <End Role="NGANHHOC" EntitySet="NGANHHOC" />
+      <End Role="THISINH" EntitySet="THISINH" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

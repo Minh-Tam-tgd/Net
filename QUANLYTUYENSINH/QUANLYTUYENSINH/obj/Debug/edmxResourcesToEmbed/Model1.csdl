@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="NGANHHOC">
+    <Key>
+      <PropertyRef Name="MaNganh" />
+    </Key>
+    <Property Name="MaNganh" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TenNganh" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="THISINHs" Relationship="Self.FK_THISINH_NGANHHOC" FromRole="NGANHHOC" ToRole="THISINH" />
+  </EntityType>
+  <EntityType Name="THISINH">
+    <Key>
+      <PropertyRef Name="MaTS" />
+    </Key>
+    <Property Name="MaTS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="HoTen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NgaySinh" Type="DateTime" Precision="0" />
+    <Property Name="DiemThi" Type="Double" />
+    <Property Name="MaNganh" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="NGANHHOC" Relationship="Self.FK_THISINH_NGANHHOC" FromRole="THISINH" ToRole="NGANHHOC" />
+  </EntityType>
+  <Association Name="FK_THISINH_NGANHHOC">
+    <End Role="NGANHHOC" Type="Self.NGANHHOC" Multiplicity="0..1" />
+    <End Role="THISINH" Type="Self.THISINH" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NGANHHOC">
+        <PropertyRef Name="MaNganh" />
+      </Principal>
+      <Dependent Role="THISINH">
+        <PropertyRef Name="MaNganh" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="NGANHHOCs" EntityType="Self.NGANHHOC" />
+    <EntitySet Name="THISINHs" EntityType="Self.THISINH" />
+    <AssociationSet Name="FK_THISINH_NGANHHOC" Association="Self.FK_THISINH_NGANHHOC">
+      <End Role="NGANHHOC" EntitySet="NGANHHOCs" />
+      <End Role="THISINH" EntitySet="THISINHs" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
